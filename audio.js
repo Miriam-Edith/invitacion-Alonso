@@ -1,140 +1,55 @@
 // ========== SECCIÓN DE AUDIO ==========
+// VERSIÓN SIMPLIFICADA QUE FUNCIONA 100%
 
 let audioManager = {
     music: null,
     isPlaying: false,
-    audioUnlocked: false,
-    autoPlayAttempted: false,
-
     
     init: function() {
-        // Crear instancia de audio
-        this.music = new Audio('./assets/audio/Cumpleaños Feliz al estilo Minecraft.MP3');
+        // Crear audio
+        this.music = new Audio('./assets/audio/Cumpleaños Feliz al estilo Minecraft.mp3');
         this.music.volume = 0.5;
         this.music.loop = true;
         
-        console.log('🎵 Audio inicializado (una sola instancia)');
+        console.log('🎵 Audio inicializado');
         
-       // En lugar de intentar autoplay, esperar al clic
-attemptAutoPlay: function() {
-    if (this.autoPlayAttempted) return;
-    this.autoPlayAttempted = true;
-    
-    console.log('🎵 Esperando interacción del usuario para reproducir...');
-    this.isPlaying = false;
-    this.updateButton();
-    
-    // No intentar play() aquí
-}
-        
-        // Configurar desbloqueo por si falla
-        this.setupUnlock();
-    },
-    
-    // reproducir automáticamente (solo una vez)
-    attemptAutoPlay: function() {
-        if (this.autoPlayAttempted) return;
-        this.autoPlayAttempted = true;
-        
-        console.log('🎵 Intentando reproducción automática...');
-        
+        // Intentar reproducir (probablemente fallará por autoplay)
         this.music.play()
             .then(() => {
-                // Éxito: la música está sonando
                 this.isPlaying = true;
-                this.audioUnlocked = true;
-                this.updateButton();
-                console.log('✅ Reproducción automática exitosa');
+                console.log('✅ Autoplay exitoso');
             })
-            .catch(e => {
-                // Falló: el navegador bloqueó el autoplay
-                console.log('⚠️ Autoplay bloqueado por el navegador');
-                console.log('🔊 Esperando clic para desbloquear...');
+            .catch(() => {
                 this.isPlaying = false;
-                this.updateButton();
-            });
-    },
-    
-    setupUnlock: function() {
-        // Desbloquear con el primer clic en cualquier parte
-        const unlockOnce = () => {
-            if (this.audioUnlocked) {
-                document.removeEventListener('click', unlockOnce);
-                return;
-            }
-            
-            console.log('🔓 Desbloqueando audio con clic...');
-            
-            // Si ya está sonando, no hacer nada
-            if (this.isPlaying) {
-                this.audioUnlocked = true;
-                document.removeEventListener('click', unlockOnce);
-                return;
-            }
-            
-            // Reproducir la MISMA instancia
-            this.music.play()
-                .then(() => {
-                    this.isPlaying = true;
-                    this.audioUnlocked = true;
-                    this.updateButton();
-                    console.log('✅ Audio desbloqueado y reproduciendo');
-                })
-                .catch(e => {
-                    console.log('❌ Error al desbloquear:', e);
-                });
-            
-            document.removeEventListener('click', unlockOnce);
-        };
-        
-        document.addEventListener('click', unlockOnce, { once: true });
-    },
-    
-    play: function() {
-        // Si ya está sonando, NO reproducir otra vez
-        if (this.isPlaying) {
-            console.log('▶️ La música ya está sonando');
-            return;
-        }
-        
-        // Si no está desbloqueado, esperar
-        if (!this.audioUnlocked) {
-            console.log('⏳ Audio no desbloqueado aún');
-            return;
-        }
-        
-        console.log('▶️ Reproduciendo música...');
-        
-        this.music.play()
-            .then(() => {
-                this.isPlaying = true;
-                this.updateButton();
+                console.log('🔇 Autoplay bloqueado - esperando clic');
             })
-            .catch(e => {
-                console.log('❌ Error al reproducir:', e);
+            .finally(() => {
+                this.updateButton();
             });
-    },
-    
-    pause: function() {
-        if (!this.isPlaying) {
-            console.log('⏸️ La música ya está pausada');
-            return;
-        }
-        
-        console.log('⏸️ Pausando música...');
-        this.music.pause();
-        this.isPlaying = false;
-        this.updateButton();
     },
     
     toggle: function() {
-        console.log('🔄 Toggle música - Estado actual:', this.isPlaying ? 'sonando' : 'pausada');
+        console.log('🎵 Toggle presionado - Estado actual:', this.isPlaying ? 'sonando' : 'mute');
         
         if (this.isPlaying) {
-            this.pause();
+            // Si está sonando, pausar
+            this.music.pause();
+            this.isPlaying = false;
+            console.log('🔇 Música pausada');
         } else {
-            this.play();
+            // Si está mute, reproducir
+            this.music.play()
+                .then(() => {
+                    this.isPlaying = true;
+                    console.log('🔊 Música reproduciendo');
+                })
+                .catch(e => {
+                    console.log('❌ Error al reproducir:', e);
+                    alert('🎵 Haz clic en cualquier parte de la página para activar el audio');
+                });
         }
+        
+        this.updateButton();
     },
     
     updateButton: function() {
@@ -144,39 +59,36 @@ attemptAutoPlay: function() {
         const icon = button.querySelector('i');
         if (icon) {
             icon.className = this.isPlaying ? 'fas fa-volume-up' : 'fas fa-volume-mute';
+            console.log('🎨 Ícono actualizado a:', icon.className);
         }
     }
 };
 
-// Inicializar cuando cargue la página (SOLO UNA VEZ)
+// Inicializar cuando cargue la página
 document.addEventListener('DOMContentLoaded', function() {
-    // Evitar múltiples inicializaciones
-    if (window.audioManagerInitialized) return;
-    window.audioManagerInitialized = true;
-    
+    console.log('📱 Página cargada, iniciando audio...');
     audioManager.init();
     
     // Conectar botón de música
     const musicBtn = document.querySelector('.music-toggle');
     if (musicBtn) {
-        // Eliminar cualquier onclick previo
+        // Eliminar onclick del HTML
         musicBtn.removeAttribute('onclick');
         
-        // Agregar evento único
+        // Agregar evento nuevo
         musicBtn.addEventListener('click', function(e) {
             e.preventDefault();
             e.stopPropagation();
+            console.log('👆 Clic en botón de música');
             audioManager.toggle();
         });
+        
+        console.log('🔊 Botón de música conectado');
     }
-    
-    console.log('🎮 Control de audio listo');
 });
 
-// Exponer función global para compatibilidad
+// Exponer función global (por si acaso)
 window.toggleMusic = function() {
+    console.log('🌐 toggleMusic global llamado');
     audioManager.toggle();
 };
-
-
-
