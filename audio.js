@@ -8,7 +8,7 @@ let audioManager = {
     
     init: function() {
         // Crear instancia de audio
-        this.music = new Audio('assets/audio/Cumpleaños Feliz al estilo Minecraft.mp3');
+        this.music = new Audio('assets/audio/Cumpleaños Feliz al estilo Minecraft.MP3');
         this.music.volume = 0.5;
         this.music.loop = true;
         
@@ -167,3 +167,4 @@ document.addEventListener('DOMContentLoaded', function() {
 window.toggleMusic = function() {
     audioManager.toggle();
 };
+
