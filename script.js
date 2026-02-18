@@ -323,7 +323,7 @@ function loadSection(section) {
             <p style="font-size: 11px; margin-top: 15px;">Haz clic para ver</p>
         </div>
         <div class="flip-card-back">
-            <img src="assets/images/alonso-4.jpg" 
+            <img src="assets/images/Alonso-4.jpg" 
                  alt="Alonso Nivel 4" 
                  style="
                     width: 100%;
@@ -752,4 +752,5 @@ function enviarEmail(event) {
     localStorage.setItem('rsvp_' + Date.now(), JSON.stringify(rsvpData));
     
     return false;
+
 }
