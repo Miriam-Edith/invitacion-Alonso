@@ -13,18 +13,35 @@ let audioManager = {
         
         console.log('🎵 Audio inicializado');
         
-        // Intentar reproducir (probablemente fallará por autoplay)
+ // Configurar eventos para detectar cuando el audio se reproduce o pausa
+        this.music.addEventListener('play', () => {
+            this.isPlaying = true;
+            this.updateButton();
+            console.log('🔊 Evento: play');
+        });
+        
+        this.music.addEventListener('pause', () => {
+            this.isPlaying = false;
+            this.updateButton();
+            console.log('🔇 Evento: pause');
+        });
+        
+        this.music.addEventListener('ended', () => {
+            this.isPlaying = false;
+            this.updateButton();
+            console.log('⏹️ Evento: ended');
+        });
+        
+          // Intentar reproducir (probablemente fallará por autoplay)
         this.music.play()
             .then(() => {
-                this.isPlaying = true;
+                // Si funciona, ya se disparará el evento 'play'
                 console.log('✅ Autoplay exitoso');
             })
             .catch(() => {
                 this.isPlaying = false;
-                console.log('🔇 Autoplay bloqueado - esperando clic');
-            })
-            .finally(() => {
                 this.updateButton();
+                console.log('🔇 Autoplay bloqueado - esperando clic');
             });
     },
     
@@ -33,14 +50,14 @@ let audioManager = {
         
         if (this.isPlaying) {
             // Si está sonando, pausar
-            this.music.pause();
-            this.isPlaying = false;
+            this.music.play();
+            this.isPlaying = true;
             console.log('🔇 Música pausada');
         } else {
             // Si está mute, reproducir
-            this.music.play()
+            this.music.paused()
                 .then(() => {
-                    this.isPlaying = true;
+                    this.isPlaying = false;
                     console.log('🔊 Música reproduciendo');
                 })
                 .catch(e => {
@@ -92,4 +109,5 @@ window.toggleMusic = function() {
     console.log('🌐 toggleMusic global llamado');
     audioManager.toggle();
 };
+
 
