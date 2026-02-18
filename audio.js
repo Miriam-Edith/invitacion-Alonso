@@ -5,6 +5,7 @@ let audioManager = {
     isPlaying: false,
     audioUnlocked: false,
     autoPlayAttempted: false,
+
     
     init: function() {
         // Crear instancia de audio
@@ -14,8 +15,17 @@ let audioManager = {
         
         console.log('🎵 Audio inicializado (una sola instancia)');
         
-        // REPRODUCIR AUTOMÁTICAMENTE (SOLO UNA VEZ)
-        this.attemptAutoPlay();
+       // En lugar de intentar autoplay, esperar al clic
+attemptAutoPlay: function() {
+    if (this.autoPlayAttempted) return;
+    this.autoPlayAttempted = true;
+    
+    console.log('🎵 Esperando interacción del usuario para reproducir...');
+    this.isPlaying = false;
+    this.updateButton();
+    
+    // No intentar play() aquí
+}
         
         // Configurar desbloqueo por si falla
         this.setupUnlock();
@@ -167,5 +177,6 @@ document.addEventListener('DOMContentLoaded', function() {
 window.toggleMusic = function() {
     audioManager.toggle();
 };
+
 
 
