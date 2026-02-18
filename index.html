@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¡Alonso Nivel 8! - Cumpleaños Minecraft/Roblox</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"> 
+     <!-- Font Awesome para íconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Tus archivos CSS -->
+    <link rel="stylesheet" href="game.css">
+</head>
+<body>
+    <!-- 🎮 BLOQUES DE MINECRAFT CAYENDO (FONDO) -->
+    <div class="minecraft-bg">
+        <div class="block grass" style="left: 5%; animation-delay: 0s;"></div>
+        <div class="block dirt" style="left: 15%; animation-delay: 2s;"></div>
+        <div class="block stone" style="left: 25%; animation-delay: 4s;"></div>
+        <div class="block grass" style="left: 35%; animation-delay: 1s;"></div>
+        <div class="block diamond" style="left: 45%; animation-delay: 6s;"></div>
+        <div class="block gold" style="left: 55%; animation-delay: 3s;"></div>
+        <div class="block stone" style="left: 65%; animation-delay: 5s;"></div>
+        <div class="block grass" style="left: 75%; animation-delay: 7s;"></div>
+        <div class="block dirt" style="left: 85%; animation-delay: 2.5s;"></div>
+        <div class="block diamond" style="left: 95%; animation-delay: 4.5s;"></div>
+    </div>
+    <!-- Pantalla de Carga -->
+    <div class="loader">
+        <div class="minecraft-block"></div>
+        <p>Cargando aventura...</p>
+    </div>
+
+    <!-- Menú Principal -->
+    <main class="main-menu">
+        <!-- Fondo Animado -->
+        <div class="background-animation">
+            <div class="minecraft-cloud"></div>
+            <div class="roblox-avatar floating"></div>
+            <div class="pixel-heart"></div>
+        </div>
+
+        <!-- Contenido Principal -->
+        <div class="container">
+            <h1 class="title pixel-text">¡ALONSO <span class="highlight">NIVEL 8</span>!</h1>
+            <p class="subtitle">10 de Marzo - ¡Desbloquea la Fiesta!</p>
+            
+            <!-- Contador Regresivo -->
+            <div class="countdown">
+                <div class="countdown-item">
+                    <span id="days">00</span>
+                    <small>Días</small>
+                </div>
+                <div class="countdown-item">
+                    <span id="hours">00</span>
+                    <small>Horas</small>
+                </div>
+                <div class="countdown-item">
+                    <span id="minutes">00</span>
+                    <small>Minutos</small>
+                </div>
+                <div class="countdown-item">
+                    <span id="seconds">00</span>
+                    <small>Segundos</small>
+                </div>
+            </div>
+
+            <!-- Los 3 Botones Principales -->
+            <div class="buttons-grid">
+                <button class="menu-btn historia-btn" onclick="loadSection('historia')">
+                    <i class="fas fa-book"></i>
+                    <span>La Historia de Alonso</span>
+                    <div class="btn-subtitle">Video & Fotos</div>
+                </button>
+
+                <button class="menu-btn mapa-btn" onclick="loadSection('mapa')">
+                    <i class="fas fa-map-marked-alt"></i>
+                    <span>Mapa de la Misión</span>
+                    <div class="btn-subtitle">Ubicación & RSVP</div>
+                </button>
+
+                <button class="menu-btn juego-btn" onclick="loadSection('juego')">
+                    <i class="fas fa-gamepad"></i>
+                    <span>Supera el Reto</span>
+                    <div class="btn-subtitle">Minijuego</div>
+                </button>
+            </div>
+
+            <!-- Easter Egg -->
+<div class="easter-egg-container">
+    <div class="easter-block" onclick="checkEasterEgg(this)">
+        <img src="assets/images/diamond-block.jpg" alt="Bloque de diamante">
+        <span class="click-counter">0</span>
+    </div>
+    <p class="easter-hint">✨ Pista: Haz clic 8 veces en el bloque ✨</p>
+</div>
+
+        <!-- Audio -->
+        <audio id="bg-music" loop preload="auto">
+       <!-- <source src="assets/audio/minecraft-theme.mp3" type="audio/mpeg"> -->
+         <source src="assets/audio/Cumpleaños Feliz al estilo Minecraft.mp3" type="audio/mpeg">
+        </audio>
+        <button class="music-toggle" onclick="toggleMusic()">
+            <i class="fas fa-volume-mute"></i>
+        </button>
+    </main>
+
+    <!-- Sección Dinámica (se carga aquí) -->
+    <div id="content-section"></div>
+
+    <!-- Modal para Easter Egg -->
+    <div id="secretModal" class="modal">
+        <div class="modal-content pixel-border">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2>¡SECRETO DESBLOQUEADO!</h2>
+        <div style="font-size: 64px; margin:20px 0;">💎👑✨</div>
+            <p>Alonso dice: "¡Eres un detective increíble! Muestra esto en mi fiesta por un premio especial."</p>
+            <img src="assets/images/secret-reward.jpg" alt="Premio secreto">
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=TU_API_KEY&callback=initMap" async defer></script>
+    <!-- Al final del body, antes del cierre -->
+    <script src="audio.js"></script>  <!-- Si usas archivo separado -->
+    <!-- Fondo de bloques animados -->
+</div>
+</body>
+</html>

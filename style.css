@@ -1,0 +1,973 @@
+/* ========== RESET Y CONFIGURACIÓN ========== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --minecraft-green: #7CBA3D;
+    --minecraft-dark-green: #5A7A34;
+    --roblox-blue: #00A2FF;
+    --primary-yellow: #FFD700;
+    --primary-red: #FF5555;
+}
+
+/* ========== BODY CON FONDO DE MINECRAFT ========== */
+body {
+    font-family: 'Press Start 2P', 'Courier New', monospace;
+    color: white;
+    min-height: 100vh;
+    overflow-x: hidden;
+    
+    /* ✅ FONDO DE MINECRAFT - VISIBLE */
+    background-image: url('assets/images/minecraft.webp');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    margin: 0;
+    padding: 0;
+    position: relative;
+}
+
+/* ========== 🎮 BLOQUES DE MINECRAFT CAYENDO ========== */
+.minecraft-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+    overflow: hidden;
+}
+
+.block {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    top: -80px;
+    animation: fall linear infinite;
+    animation-duration: 12s;
+    font-size: 50px;
+    text-align: center;
+    line-height: 60px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+/* Animación de caída */
+@keyframes fall {
+    from {
+        top: -80px;
+        transform: rotate(0deg);
+    }
+    to {
+        top: 120vh;
+        transform: rotate(360deg);
+    }
+}
+
+/* Texturas de bloques - VERSIÓN EMOJI */
+.block.grass::before { content: "🌿"; }
+.block.dirt::before { content: "🟫"; }
+.block.stone::before { content: "🪨"; }
+.block.diamond::before { content: "💎"; }
+.block.gold::before { content: "🪙"; }
+.block.ore::before { content: "⛏️"; }
+.block.emerald::before { content: "💚"; }
+.block.redstone::before { content: "🔴"; }
+
+/* ========== LOADER ========== */
+.loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--minecraft-dark-green);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    transition: opacity 0.5s;
+}
+
+.minecraft-block {
+    width: 60px;
+    height: 60px;
+    background: var(--minecraft-green);
+    position: relative;
+    animation: bounce 1s infinite alternate;
+    box-shadow: 
+        inset -5px -5px 0 #5A7A34,
+        inset 5px 5px 0 #9DD65B;
+}
+
+@keyframes bounce {
+    from { transform: translateY(0); }
+    to { transform: translateY(-20px); }
+}
+
+/* ========== MENÚ PRINCIPAL ========== */
+.main-menu {
+    padding: 20px;
+    text-align: center;
+    position: relative;
+    z-index: 3;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 3;
+
+    /*Fondo  y bordes transparentes*/
+    background: transparent;
+    padding: 20px;
+    border: none;
+    backdrop-filter: none;
+}
+
+/* ========== TÍTULOS ========== */
+.title {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    text-shadow: 5px 5px 0 #000;
+}
+
+.highlight {
+    color: var(--primary-yellow);
+    animation: glow 2s infinite alternate;
+}
+
+@keyframes glow {
+    from { text-shadow: 0 0 10px #2a32af; }
+    to { text-shadow: 0 0 20px #7e2884, 0 0 30px #2498a2; }
+}
+
+.subtitle {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+    opacity: 0.9;
+    color: #2a16ae;
+    text-shadow: 2px 2px 4px rgba(225, 237, 254, 0.896);
+}
+
+/* ========== CONTADOR REGRESIVO ========== */
+.countdown {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin: 40px 0;
+}
+
+.countdown-item {
+    background: rgba(0, 0, 0, 0.8);
+    padding: 20px;
+    border-radius: 15px;
+    min-width: 120px;
+    border: 4px solid var(--roblox-blue);
+    box-shadow: 0 8px 0 #0066cc;
+}
+
+.countdown-item span {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 2.5rem;
+    display: block;
+    color: var(--primary-yellow);
+    text-shadow: 3px 3px 0 #000;
+}
+
+.countdown-item small {
+    font-size: 0.9rem;
+    display: block;
+    margin-top: 10px;
+    color: #fff;
+}
+
+/* ========== BOTONES PRINCIPALES ========== */
+.buttons-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px;
+    margin: 50px 0;
+    position: relative;
+    z-index: 3;
+}
+
+.menu-btn {
+    background: linear-gradient(145deg, #34e67e, #1f1f3d);
+    border: none;
+    padding: 30px;
+    border-radius: 20px;
+    color: white;
+    font-size: 1.3rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+    border: 4px solid transparent;
+    box-shadow: 0 10px 0 #0a0a1a;
+}
+
+.menu-btn:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgb(53, 212, 230);
+}
+
+.historia-btn:hover { border-color: var(--primary-red); }
+.mapa-btn:hover { border-color: var(--minecraft-green); }
+.juego-btn:hover { border-color: var(--roblox-blue); }
+
+.menu-btn i {
+    font-size: 3rem;
+    display: block;
+    margin-bottom: 15px;
+}
+
+.btn-subtitle {
+    font-size: 0.9rem;
+    opacity: 0.8;
+    margin-top: 10px;
+}
+
+/* ========== 🎮 EASTER EGG - BLOQUE DE 8 CLICS (CON TU IMAGEN) ========== */
+.easter-egg-container {
+    margin-top: 60px;
+    padding: 30px;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.7);  /* FONDO NEGRO SEMITRANSPARENTE */
+    border-radius: 20px;
+    border: 4px solid var(--minecraft-green);
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    z-index: 3;
+    backdrop-filter: blur(5px);
+}
+
+.easter-block {
+    width: 150px;
+    height: 150px;
+    margin: 0 auto 20px;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.2s;
+    border: 8px solid #444;
+    border-radius: 20px;
+    background: transparent;
+    box-shadow: 0 15px 0 #1e90ff;
+    overflow: visible;
+    padding: 0;                   /* 🔴 SIN PADDING */
+}
+
+
+.easter-block img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;            /* 🔴 LA IMAGEN CUBRE TODO */
+    display: block;
+    border-radius: 12px;           /* 🔴 BORDE REDONDEADO PARA LA IMAGEN */
+    image-rendering: pixelated;  /* PARA PIXEL ART */
+}
+
+.easter-block:active {
+    transform: translateY(15px);
+    box-shadow: 
+        0 0 0 #1e90ff,
+        inset -10px -10px 0 rgba(0,0,0,0.3),
+        inset 10px 10px 0 rgba(255,255,255,0.3);
+}
+
+.click-counter {
+    position: absolute;
+    top: -20px;                    /* 🔴 MÁS ARRIBA AÚN */
+    right: -20px;                  /* 🔴 MÁS A LA DERECHA AÚN */
+    background: #ff4444;
+    color: white;
+    width: 50px;                  /* 🔴 MÁS GRANDE */
+    height: 50px;                  /* 🔴 MÁS GRANDE */
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 24px;
+    border: 5px solid white;
+    box-shadow: 0 6px 0 #aa0000;
+    font-family: 'Press Start 2P', monospace;
+    z-index: 20;
+    box-sizing: border-box;
+}
+
+
+.easter-hint {
+    color: #FFD700;
+    font-size: 14px;
+    text-shadow: 2px 2px 0 #000;
+    animation: glow 2s infinite alternate;
+    margin-top: 15px;
+}
+
+/* CSS para el bloque secreto */
+.secret-block-container {
+    text-align: center;
+    margin: 40px 0;
+}
+
+.secret-block {
+    width: 100px;
+    height: 100px;
+    margin: 0 auto;
+    cursor: pointer;
+    position: relative;
+    transition: transform 0.1s;
+}
+
+.secret-block:active {
+    transform: scale(0.95);
+}
+
+.secret-block img {
+    width: 100%;
+    height: 100%;
+    image-rendering: pixelated;
+    margin: 40px 0;
+}
+
+.easter-hint {
+    color: #FFD700;
+    font-size: 16px;
+    text-shadow: 2px 2px 0 #000;
+    animation: glow 2s infinite alternate;
+    margin: 15px;
+}
+
+/* ========== MODAL SECRETO MEJORADO ========== */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 999999;
+    animation: fadeIn 0.2s;
+    overflow: auto;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.modal-content {
+    background: linear-gradient(145deg, #2d2d4d, #1f1f3d);
+    color: white;
+    margin: 5% auto;
+    padding: 25px;
+    width: 90%;
+    max-width: 450px;
+    border-radius: 20px;
+    position: relative;
+    border: 6px solid var(--primary-yellow);
+    text-align: center;
+    animation: slideIn 0.2s;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    overflow: auto;
+    max-height: 90vh;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(-30px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+
+/* ========== 🎁 MODAL SECRETO - IMAGEN RESPONSIVE ========== */
+.modal-content img {
+    width: 100%;           /* Ocupa el ancho completo del contenedor */
+    height: auto;          /* Mantiene la proporción */
+    max-width: 200px;      /* Tamaño máximo para que no sea muy grande */
+    max-height: 150px;     /* Altura máxima */
+    object-fit: contain;   /* La imagen se ajusta sin cortarse */
+    display: block;        /* Elimina espacio extra debajo de la imagen */
+    margin: 10px auto;     /* Centrada con margen */
+    border: 4px solid #FFD700;  /* Borde dorado estilo Minecraft */
+    border-radius: 10px;   /* Esquinas redondeadas */
+    image-rendering: pixelated; /* Si es pixel art, se ve mejor */
+    background: rgba(0,0,0,0.2); /* Fondo por si la imagen es transparente */
+    padding: 5px;          /* Espacio interno */
+}
+
+.close {
+    position: absolute;
+    right: 15px;
+    top: 10px;
+    font-size: 35px;
+    font-weight: bold;
+    color: white;
+    cursor: pointer;
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #ff4444;
+    border-radius: 50%;
+    border: 4px solid white;
+    transition: all 0.2s;
+    line-height: 1;
+    box-shadow: 0 4px 0 #aa0000;
+    z-index: 10;
+    font-size: small;
+}
+
+.close:hover {
+    background: #ff0000;
+    transform: scale(1.1);
+    box-shadow: 0 2px 0 #aa0000;
+}
+
+.modal-content h2 {
+    font-size: 20px;
+    margin: 30px 0 15px;
+    color: var(--primary-yellow);
+    text-shadow: 3px 3px 0 #000;
+    font-family: 'Press Start 2P', monospace;
+    line-height: 1.4;
+    word-break: break-word;
+}
+
+/*Texto de Alonso*/
+.modal-content p {
+    font-size: 12px;
+    line-height: 1.6;
+    margin: 15px 0;
+    background: rgba(0,0,0,0.3);
+    padding: 15px;
+    border-radius: 10px;
+    border-left: 4px solid var(--primary-yellow);
+    font-family: 'Press Start 2P', monospace;
+    text-align: left;
+    word-break: break-word;
+}
+
+/* 🖼️ IMAGEN DEL PREMIO */
+.secret-reward-img {
+    width: auto;
+    max-width: 80%;  /* ✅ NUNCA MÁS ANCHA QUE EL MODAL */
+    height: auto;
+    max-height: 120px;  /* ✅ ALTURA MÁXIMA */
+    object-fit: contain;
+    margin: 10px auto;
+    border: 4px solid #FFD700;
+    border-radius: 10px;
+    box-shadow: 0 6px 0 #b8860b;
+    image-rendering: crisp-edges;
+    background: #2d2d4d;
+    padding: 5px;
+    display: block;
+}
+
+/* ========== 🎴 TARJETAS QUE GIRAN (FLIP CARD) ========== */
+.flip-card {
+    background-color: transparent;
+    width: 100%;
+    height: 300px;
+    perspective: 1000px;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+
+.flip-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+}
+
+.flip-card:hover .flip-card-inner {
+    box-shadow: 0 15px 35px rgba(255, 215, 0, 0.3);
+}
+
+.flip-card.flipped .flip-card-inner {
+    transform: rotateY(180deg);
+}
+
+.flip-card-front, .flip-card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.flip-card-front {
+    background: linear-gradient(145deg, #2d2d4d, #1f1f3d);
+    border: 4px solid var(--roblox-blue);
+    color: white;
+}
+
+.flip-card-front h4 {
+    font-family: 'Press Start 2P', monospace;
+    color: var(--primary-yellow);
+    text-shadow: 2px 2px 0 #000;
+    margin: 15px 0 10px;
+    font-size: 18px;
+}
+
+.flip-card-back {
+    background: linear-gradient(145deg, #1f1f3d, #2d2d4d);
+    border: 4px solid var(--primary-yellow);
+    transform: rotateY(180deg);
+    padding: 0;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.flip-card-back img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;       /* Cambia a 'contain' si quieres ver toda la foto */
+    object-position: center;
+    display: block;
+    transition: transform 0.3s;
+}
+
+.flip-card-back img:hover {
+    transform: scale(1.05);
+}
+
+/* ========== 🎥 VIDEO EXPANDIBLE - CORRECCIÓN ========== */
+.video-wrapper {
+    transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative;
+    z-index: 1;
+}
+
+.video-wrapper.expanded {
+    box-shadow: 0 0 30px rgba(255, 215, 0, 0.7);
+    border-color: #FFD700 !important;
+}
+
+.video-wrapper video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    background: #000; /* Fondo negro por si el video no carga */
+}
+
+#video-overlay {
+    animation: fadeIn 0.3s ease;
+    backdrop-filter: blur(3px); /* 🔴 EFECTO BORROSO OPCIONAL */
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* ========== 🎥 OCULTAR PLAY AL EXPANDIR ========== */
+.video-wrapper.expanded .fa-play {
+    display: none !important;
+}
+
+.video-wrapper.expanded div[style*="position: absolute"] {
+    display: none !important;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .video-wrapper {
+        width: 300px !important;
+        height: 300px !important;
+    }
+    
+    .video-wrapper.expanded {
+        width: 90% !important;
+        height: auto !important;
+        max-width: 500px;
+    }
+}
+
+.modal-content.minecraft-btn:hover {
+    transform: translateY(4px);
+    box-shadow: 0 2px 0 #1a1a1a;
+    background: linear-gradient(to bottom, #9c9c9c, #6a6a6a);
+}
+
+/* Variedad de bloques */
+.easter-block.grass { background: #7c9c5e; box-shadow: 0 15px 0 #5a7a3e; }
+.easter-block.dirt { background: #8b5a2b; box-shadow: 0 15px 0 #6b3a1b; }
+.easter-block.stone { background: #808080; box-shadow: 0 15px 0 #606060; }
+.easter-block.gold { background: #ffd700; box-shadow: 0 15px 0 #daa520; }
+
+/* ========== 🗺️ MAPA DE MINECRAFT ========== */
+.minecraft-map-container {
+    position: relative;
+    width: 100%;
+    max-width: 800px;
+    margin: 30px auto;
+    border: 12px solid #5a7a3e;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.6);
+    image-rendering: pixelated;
+}
+
+.minecraft-map {
+    width: 100%;
+    display: block;
+    transition: transform 0.3s;
+}
+
+.minecraft-map:hover {
+    transform: scale(1.02);
+}
+
+.map-pin {
+    position: absolute;
+    transform: translate(-50%, -100%);
+    text-align: center;
+    animation: mapBounce 1s infinite;
+}
+
+.map-pin i {
+    font-size: 48px;
+    color: #ff4444;
+    text-shadow: 
+        3px 3px 0 #000,
+        -1px -1px 0 #000,
+        1px -1px 0 #000,
+        -1px 1px 0 #000;
+}
+
+.map-pin span {
+    position: absolute;
+    top: -40px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0,0,0,0.9);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 10px;
+    font-size: 14px;
+    white-space: nowrap;
+    border: 3px solid #FFD700;
+    font-family: 'Press Start 2P', monospace;
+}
+
+@keyframes mapBounce {
+    0%, 100% { transform: translate(-50%, -100%); }
+    50% { transform: translate(-50%, -120%); }
+}
+
+/* ========== 📝 FORMULARIO RSVP ========== */
+.rsvp-form {
+    background: rgba(0, 0, 0, 0.85);
+    padding: 40px;
+    border-radius: 20px;
+    border: 4px solid var(--minecraft-green);
+    margin-top: 30px;
+}
+
+.rsvp-form h3 {
+    color: var(--primary-yellow);
+    margin-bottom: 25px;
+    font-size: 24px;
+    text-shadow: 3px 3px 0 #000;
+}
+
+.rsvp-form input,
+.rsvp-form textarea {
+    width: 100%;
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 4px solid #444;
+    border-radius: 10px;
+    background: #2a2a2a;
+    color: white;
+    font-size: 16px;
+    font-family: 'Press Start 2P', monospace;
+}
+
+.rsvp-form input:focus,
+.rsvp-form textarea:focus {
+    border-color: var(--minecraft-green);
+    outline: none;
+    box-shadow: 0 0 15px var(--minecraft-green);
+}
+
+.minecraft-btn {
+    background: linear-gradient(to bottom, #7c7c7c, #4a4a4a);
+    border: 4px solid #2a2a2a;
+    color: white;
+    padding: 15px 30px;
+    font-size: 18px;
+    cursor: pointer;
+    border-radius: 10px;
+    font-weight: bold;
+    transition: all 0.2s;
+    box-shadow: 0 8px 0 #1a1a1a;
+    font-family: 'Press Start 2P', monospace;
+    width: 100%;
+}
+
+.minecraft-btn:hover {
+    transform: translateY(4px);
+    box-shadow: 0 4px 0 #1a1a1a;
+    background: linear-gradient(to bottom, #9c9c9c, #6a6a6a);
+}
+
+/* ========== 🎵 BOTÓN DE MÚSICA ========== */
+.music-toggle {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background: var(--roblox-blue);
+    border: 4px solid white;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    color: white;
+    cursor: pointer;
+    font-size: 1.8rem;
+    box-shadow: 0 8px 0 #0066cc;
+    transition: all 0.2s;
+    z-index: 1000;
+}
+
+.music-toggle:hover {
+    transform: translateY(4px);
+    box-shadow: 0 4px 0 #0066cc;
+}
+
+.music-toggle:active {
+    transform: translateY(8px);
+    box-shadow: 0 0 0 #0066cc;
+}
+
+/* ========== SECCIONES DINÁMICAS ========== */
+#content-section {
+    position: relative;
+    z-index: 3;
+    transition: opacity 0.3s;
+    margin-top: 30px;
+}
+
+.section {
+    background: rgba(0, 0, 0, 0.85);
+    border-radius: 30px;
+    padding: 40px;
+    border: 4px solid var(--minecraft-green);
+    backdrop-filter: blur(5px);
+}
+
+.back-btn {
+    background: var(--primary-red);
+    border: 4px solid white;
+    color: white;
+    padding: 12px 24px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 10px;
+    margin-bottom: 30px;
+    font-family: 'Press Start 2P', monospace;
+    box-shadow: 0 6px 0 #aa0000;
+    transition: all 0.2s;
+}
+
+.back-btn:hover {
+    transform: translateY(4px);
+    box-shadow: 0 2px 0 #aa0000;
+}
+
+/* ========== VIDEO Y FOTOS ========== */
+.video-container {
+    margin: 30px 0;
+    border: 8px solid #5a7a3e;
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.video-container video {
+    width: 100%;
+    display: block;
+}
+
+.photo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.photo-card {
+    background: linear-gradient(145deg, #2d2d4d, #1f1f3d);
+    padding: 30px;
+    border-radius: 15px;
+    text-align: center;
+    border: 4px solid var(--roblox-blue);
+    font-size: 18px;
+}
+
+/* ========== 🖼️ MEJORAS PARA LAS FOTOS ========== */
+.flip-card {
+    background-color: transparent;
+    width: 100%;
+    height: 300px;
+    perspective: 1000px;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+
+.flip-card-inner{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+}
+
+.flip-card-back {
+    background: linear-gradient(145deg, #2d2d4d, #1f1f3d);
+    padding: 0;
+}
+
+.flip-card-back img {
+    transition: transform 0.3s ease;
+    border: 4px solid #FFD700;
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+}
+
+.flip-card-back img:hover {
+    transform: scale(1.05);
+}
+
+/* Si la imagen no carga, mostrar placeholder con emoji */
+.flip-card-back img[src=""] {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 60px;
+}
+
+/* ========== JUEGO ========== */
+.game-container {
+    margin-top: 30px;
+    text-align: center;
+}
+
+#gameCanvas {
+    background: linear-gradient(to bottom, #87CEEB, #5a7a3e);
+    border: 8px solid #5a7a3e;
+    border-radius: 15px;
+    max-width: 100%;
+    height: auto;
+}
+
+.game-controls {
+    margin-top: 30px;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 15px;
+}
+
+.game-controls p {
+    margin: 10px 0;
+    font-size: 14px;
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 768px) {
+    .title { 
+        font-size: 1.5rem; 
+    }
+    
+    .container {
+        padding: 20px;
+    }
+    
+    .buttons-grid { 
+        grid-template-columns: 1fr; 
+    }
+    
+    .countdown { 
+        flex-wrap: wrap; 
+    }
+    
+    .countdown-item { 
+        min-width: calc(50% - 20px);
+    }
+    
+    .countdown-item span {
+        font-size: 1.8rem;
+    }
+    
+    .easter-block {
+        width: 120px;
+        height: 120px;
+    }
+    
+    .block-face {
+        font-size: 60px;
+    }
+    
+    .music-toggle {
+        bottom: 20px;
+        right: 20px;
+        width: 50px;
+        height: 50px;
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .title {
+        font-size: 1.2rem;
+    }
+    
+    .countdown-item {
+        min-width: 100%;
+    }
+    
+    .menu-btn {
+        padding: 20px;
+    }
+    
+    .block {
+        width: 40px;
+        height: 40px;
+        font-size: 35px;
+        line-height: 40px;
+    }
+}
